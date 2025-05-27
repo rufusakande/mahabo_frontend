@@ -1,0 +1,940 @@
+/* KYCForm.css - Styles pour la page de demande de validation */
+
+/* Variables CSS pour la charte graphique */
+:root {
+  --primary-blue: #1E3A8A;
+  --pure-white: #FFFFFF;
+  --light-gray: #F3F4F6;
+  --emerald-green: #10B981;
+  --coral-red: #EF4444;
+  --golden-yellow: #F59E0B;
+  --dark-gray: #374151;
+  --medium-gray: #6B7280;
+  --border-color: #E5E7EB;
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.15);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Reset et base */
+#kycForm * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#kycForm {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--light-gray) 0%, var(--pure-white) 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--dark-gray);
+  padding: 2rem 1rem;
+}
+
+#kycForm .container {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* En-tête du formulaire */
+#kycForm .form-container {
+  background: var(--pure-white);
+  border-radius: 24px;
+  box-shadow: var(--shadow-heavy);
+  overflow: hidden;
+  position: relative;
+  animation: slideUp 0.8s ease-out;
+}
+
+#kycForm .form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-blue), var(--emerald-green));
+}
+
+#kycForm .form-header {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, #2563EB 100%);
+  color: var(--pure-white);
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#kycForm .form-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+  animation: shimmer 6s ease-in-out infinite;
+}
+
+#kycForm .form-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.025em;
+}
+
+#kycForm .form-header p {
+  font-size: 1.125rem;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+/* Indicateur de progression */
+#progressIndicator {
+  padding: 2rem;
+  background: var(--pure-white);
+  border-bottom: 1px solid var(--border-color);
+}
+
+#progressIndicator .progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#progressIndicator .step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+#progressIndicator .step-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--light-gray);
+  color: var(--medium-gray);
+  transition: var(--transition-smooth);
+  margin-bottom: 0.75rem;
+  border: 3px solid var(--border-color);
+}
+
+#progressIndicator .step.active .step-icon {
+  background: var(--primary-blue);
+  color: var(--pure-white);
+  border-color: var(--primary-blue);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(30, 58, 138, 0.3);
+}
+
+#progressIndicator .step.completed .step-icon {
+  background: var(--emerald-green);
+  color: var(--pure-white);
+  border-color: var(--emerald-green);
+  animation: pulse 0.6s ease-out;
+}
+
+#progressIndicator .step-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--medium-gray);
+  transition: var(--transition-smooth);
+}
+
+#progressIndicator .step.active .step-label,
+#progressIndicator .step.completed .step-label {
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+#progressIndicator .progress-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border-color);
+  margin: 0 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+#progressIndicator .progress-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--emerald-green);
+  width: 0;
+  transition: width 0.8s ease-out;
+}
+
+#progressIndicator .step.completed ~ .progress-line::after {
+  width: 100%;
+}
+
+/* Contenu du formulaire */
+#kycForm .form-content {
+  padding: 3rem 2rem;
+  min-height: 500px;
+}
+
+#kycForm .form-step {
+  animation: fadeInSlide 0.6s ease-out;
+}
+
+#kycForm .step-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+#kycForm .step-header h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-bottom: 0.75rem;
+}
+
+#kycForm .step-header p {
+  font-size: 1.125rem;
+  color: var(--medium-gray);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Grille du formulaire */
+#kycForm .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#kycForm .form-group {
+  position: relative;
+}
+
+#kycForm .form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+#kycForm .form-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--dark-gray);
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+#kycForm .form-group label svg {
+  color: var(--primary-blue);
+}
+
+/* Champs de saisie */
+#kycForm .form-group input,
+#kycForm .form-group select {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: var(--transition-smooth);
+  background: var(--pure-white);
+  color: var(--dark-gray);
+}
+
+#kycForm .form-group input:focus,
+#kycForm .form-group select:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+  transform: translateY(-1px);
+}
+
+#kycForm .form-group input:hover,
+#kycForm .form-group select:hover {
+  border-color: var(--primary-blue);
+}
+
+#kycForm .form-group input.error,
+#kycForm .form-group select.error {
+  border-color: var(--coral-red);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+#kycForm .form-group .error-message {
+  color: var(--coral-red);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  animation: shake 0.4s ease-out;
+}
+
+/* Section des documents */
+#kycForm .documents-section {
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  gap: 3rem;
+}
+
+#kycForm .document-group {
+  background: var(--light-gray);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  transition: var(--transition-smooth);
+}
+
+#kycForm .document-group:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+#kycForm .document-group h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-bottom: 1.5rem;
+}
+
+#kycForm .document-group h3 svg {
+  color: var(--primary-blue);
+}
+
+/* Upload de fichiers */
+#kycForm .file-upload {
+  margin-top: 1rem;
+}
+
+#kycForm .upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  background: var(--pure-white);
+  text-align: center;
+  gap: 0.75rem;
+}
+
+#kycForm .upload-label:hover {
+  border-color: var(--primary-blue);
+  background: rgba(30, 58, 138, 0.02);
+  transform: translateY(-1px);
+}
+
+#kycForm .upload-label svg {
+  color: var(--primary-blue);
+}
+
+#kycForm .upload-label span {
+  font-weight: 500;
+  color: var(--dark-gray);
+}
+
+#kycForm .file-input {
+  display: none;
+}
+
+/* Section récapitulatif */
+#kycForm .summary-section {
+  max-width: 700px;
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+}
+
+#kycForm .info-summary,
+#kycForm .documents-summary {
+  background: var(--light-gray);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+#kycForm .info-summary h3,
+#kycForm .documents-summary h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+#kycForm .summary-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+#kycForm .summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+#kycForm .summary-item:last-child {
+  border-bottom: none;
+}
+
+#kycForm .summary-item strong {
+  color: var(--dark-gray);
+  font-weight: 500;
+}
+
+#kycForm .summary-item span {
+  color: var(--medium-gray);
+  text-align: right;
+}
+
+#kycForm .document-preview {
+  display: grid;
+  gap: 1rem;
+}
+
+#kycForm .preview-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--pure-white);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+#kycForm .preview-item svg {
+  color: var(--primary-blue);
+  flex-shrink: 0;
+}
+
+#kycForm .preview-info {
+  flex: 1;
+}
+
+#kycForm .preview-info strong {
+  display: block;
+  color: var(--dark-gray);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+#kycForm .preview-info span {
+  display: block;
+  color: var(--medium-gray);
+  font-size: 0.875rem;
+}
+
+#kycForm .preview-info .file-name {
+  color: var(--primary-blue);
+  font-weight: 500;
+}
+
+/* Actions du formulaire */
+#kycForm .form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  background: var(--light-gray);
+  border-top: 1px solid var(--border-color);
+}
+
+#kycForm .btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-spring);
+  text-decoration: none;
+  min-width: 140px;
+  justify-content: center;
+}
+
+#kycForm .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+#kycForm .btn:active {
+  transform: translateY(0);
+}
+
+#kycForm .btn-primary {
+  background: var(--primary-blue);
+  color: var(--pure-white);
+}
+
+#kycForm .btn-primary:hover {
+  background: #1E40AF;
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
+}
+
+#kycForm .btn-secondary {
+  background: var(--pure-white);
+  color: var(--primary-blue);
+  border: 2px solid var(--primary-blue);
+}
+
+#kycForm .btn-secondary:hover {
+  background: var(--primary-blue);
+  color: var(--pure-white);
+}
+
+#kycForm .btn-success {
+  background: var(--emerald-green);
+  color: var(--pure-white);
+}
+
+#kycForm .btn-success:hover {
+  background: #059669;
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+/* Modal de succès */
+#successModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-smooth);
+  padding: 20px 10px;
+}
+
+#successModal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+#successModal .modal-content {
+  background: var(--pure-white);
+  border-radius: 24px;
+  padding: 3rem 15px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  text-align: center;
+  box-shadow: var(--shadow-heavy);
+  transform: scale(0.9) translateY(20px);
+  transition: var(--transition-spring);
+}
+
+#successModal .modal-content::-webkit-scrollbar{
+  display: none;
+}
+
+#successModal.show .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+#successModal .success-icon {
+  margin-bottom: 1.5rem;
+}
+
+#successModal .success-icon svg {
+  color: var(--emerald-green);
+  animation: checkmark 0.8s ease-out;
+}
+
+#successModal h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+}
+
+#successModal p {
+  color: var(--medium-gray);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+#successModal .verification-code {
+  background: var(--light-gray);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+#successModal .verification-code h3 {
+  font-size: 1.125rem;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+}
+
+#successModal .code-display {
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  background: var(--pure-white);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--primary-blue);
+  margin-bottom: 0.75rem;
+  letter-spacing: 2px;
+}
+
+#successModal .verification-code p {
+  font-size: 0.875rem;
+  color: var(--medium-gray);
+  margin: 0;
+}
+
+#successModal .next-steps {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+#successModal .next-steps h4 {
+  font-size: 1rem;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+}
+
+#successModal .next-steps ul {
+  list-style: none;
+  padding: 0;
+}
+
+#successModal .next-steps li {
+  padding: 0.5rem 0;
+  color: var(--medium-gray);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+#successModal .next-steps li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--emerald-green);
+  font-weight: bold;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+
+/* Tablettes et écrans moyens */
+@media (max-width: 768px) {
+  #kycForm {
+    padding: 1rem 0.5rem;
+  }
+
+  #kycForm .form-header {
+    padding: 2rem 1.5rem;
+  }
+
+  #kycForm .form-header h1 {
+    font-size: 2rem;
+  }
+
+  #kycForm .form-header p {
+    font-size: 1rem;
+  }
+
+  #progressIndicator {
+    padding: 1.5rem 1rem;
+  }
+
+  #progressIndicator .step-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  #progressIndicator .step-label {
+    font-size: 0.75rem;
+  }
+
+  #progressIndicator .progress-line {
+    margin: 0 0.5rem;
+  }
+
+  #kycForm .form-content {
+    padding: 2rem 1.5rem;
+  }
+
+  #kycForm .step-header h2 {
+    font-size: 1.5rem;
+  }
+
+  #kycForm .step-header p {
+    font-size: 1rem;
+  }
+
+  #kycForm .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  #kycForm .document-group {
+    padding: 1.5rem;
+  }
+
+  #kycForm .info-summary,
+  #kycForm .documents-summary {
+    padding: 1.5rem;
+  }
+
+  #kycForm .form-actions {
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  #kycForm .btn {
+    width: 100%;
+  }
+
+  #successModal .modal-content {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+  #kycForm .form-header h1 {
+    font-size: 1.75rem;
+  }
+
+  #progressIndicator .progress-steps {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  #progressIndicator .progress-line {
+    width: 2px;
+    height: 30px;
+    margin: 0;
+  }
+
+  #progressIndicator .step {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  #progressIndicator .step-icon {
+    margin-bottom: 0;
+  }
+
+  #kycForm .summary-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  #kycForm .summary-item span {
+    text-align: left;
+    font-weight: 500;
+  }
+
+  #kycForm .preview-item {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Montres connectées et très petits écrans */
+@media (max-width: 320px) {
+  #kycForm {
+    padding: 0.5rem 0.25rem;
+  }
+
+  #kycForm .form-container {
+    border-radius: 12px;
+  }
+
+  #kycForm .form-header {
+    padding: 1.5rem 1rem;
+  }
+
+  #kycForm .form-header h1 {
+    font-size: 1.25rem;
+  }
+
+  #kycForm .form-header p {
+    font-size: 0.875rem;
+  }
+
+  #kycForm .form-content {
+    padding: 1.5rem 1rem;
+  }
+
+  #kycForm .step-header h2 {
+    font-size: 1.25rem;
+  }
+
+  #kycForm .document-group {
+    padding: 1rem;
+  }
+
+  #kycForm .upload-label {
+    padding: 1.5rem 1rem;
+  }
+
+  #kycForm .btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  #successModal .modal-content {
+    padding: 1.5rem 1rem;
+  }
+
+  #successModal .verification-code {
+    padding: 1rem;
+  }
+
+  #successModal .code-display {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+}
+
+/* Mode sombre (optionnel) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --light-gray: #1F2937;
+    --pure-white: #111827;
+    --dark-gray: #F9FAFB;
+    --medium-gray: #D1D5DB;
+    --border-color: #374151;
+  }
+
+  #kycForm {
+    background: linear-gradient(135deg, #111827 0%, #1F2937 100%);
+  }
+
+  #kycForm .form-group input,
+  #kycForm .form-group select,
+  #kycForm .upload-label {
+    background: #1F2937;
+    color: var(--dark-gray);
+    border-color: var(--border-color);
+  }
+}
+
+#kycForm .spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+#kycForm .error-modal .error-icon {
+  color: #ef4444;
+  margin-bottom: 1rem;
+}
