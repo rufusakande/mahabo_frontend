@@ -1,0 +1,127 @@
+.requests-table-container {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+.requests-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.requests-table-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1F2937;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.requests-table-view-all {
+  color: #1E3A8A;
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.requests-table-view-all:hover {
+  background: #F3F4F6;
+}
+
+.requests-table-wrapper {
+  overflow-x: auto;
+}
+
+.requests-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.requests-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  color: #6B7280;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.requests-table th:last-child {
+  text-align: right;
+}
+
+.requests-table tr {
+  border-bottom: 1px solid #F3F4F6;
+  transition: background 0.2s ease;
+}
+
+.requests-table tbody tr:hover {
+  background: #FAFAFA;
+}
+
+.requests-table td {
+  padding: 1rem;
+}
+
+.request-id {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1E3A8A;
+}
+
+.request-user-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.request-user-email {
+  font-size: 0.75rem;
+  color: #6B7280;
+}
+
+.request-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.request-date {
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+.request-documents {
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+.request-actions {
+  text-align: right;
+}
+
+.request-view-btn {
+  background: none;
+  border: none;
+  color: #1E3A8A;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.request-view-btn:hover {
+  background: #F3F4F6;
+}

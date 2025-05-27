@@ -1,0 +1,75 @@
+.header {
+  background: white;
+  border-bottom: 1px solid #E5E7EB;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-menu-btn {
+  background: none;
+  border: none;
+  color: #1E3A8A;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.header-menu-btn:hover {
+  background: #F3F4F6;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1F2937;
+  margin: 0;
+}
+
+.header-subtitle {
+  color: #6B7280;
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-badge {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .header-title {
+    font-size: 1.25rem !important;
+  }
+}
