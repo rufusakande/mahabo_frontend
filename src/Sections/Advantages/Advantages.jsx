@@ -114,20 +114,6 @@ const Advantages = () => {
           })}
         </div>
 
-        <div className="stats-container">
-          <div className="stat-item">
-            <span className="stat-number" data-target="99.9">0</span>
-            <span className="stat-label">% de Fiabilité</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-number" data-target="50000">0</span>
-            <span className="stat-label">Vérifications Effectuées</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-number" data-target="24">0</span>
-            <span className="stat-label">Support 24/7</span>
-          </div>
-        </div>
       </div>
     </section>
   );

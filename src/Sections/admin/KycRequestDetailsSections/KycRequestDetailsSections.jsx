@@ -12,7 +12,11 @@ import {
   CheckCircle,
   XCircle,
   Clock,
-  AlertTriangle
+  AlertTriangle,
+  Eye,
+  X,
+  ZoomIn,
+  ZoomOut
 } from 'lucide-react';
 import Header from '../../../Components/admin/AdminHeader/AdminHeader';
 import Sidebar from '../../../Components/admin/Sidebar/Sidebar';
@@ -28,8 +32,15 @@ const KycRequestDetailsSections = () => {
   const [updating, setUpdating] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
+  
+  // États pour l'aperçu des documents
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewDocument, setPreviewDocument] = useState(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(1);
 
   const API_BASE_URL = import.meta.env.VITE_API_URL;
+  const URL_DOC = import.meta.env.VITE_URL_DOC;
 
   // Vérifier l'authentification
   const checkAuth = () => {
@@ -88,6 +99,71 @@ const KycRequestDetailsSections = () => {
     }
   };
 
+  // Déterminer le type de fichier
+  const getFileType = (filename) => {
+    const extension = filename.split('.').pop().toLowerCase();
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(extension)) {
+      return 'image';
+    } else if (extension === 'pdf') {
+      return 'pdf';
+    }
+    return 'unknown';
+  };
+
+  // Ouvrir l'aperçu d'un document
+  const openPreview = async (documentPath, documentType) => {
+    try {
+      setPreviewLoading(true);
+      setShowPreview(true);
+      
+      const token = localStorage.getItem('adminToken');
+      const documentUrl = `${URL_DOC}/${documentPath}`;
+      console.log(documentPath)
+      console.log(URL_DOC)
+      // Vérifier que le document existe et récupérer les informations
+      const response = await fetch(documentUrl, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const fileType = getFileType(documentPath);
+        
+        setPreviewDocument({
+          url: documentUrl,
+          type: fileType,
+          name: documentType,
+          path: documentPath
+        });
+        setZoomLevel(1);
+      } else {
+        throw new Error('Impossible de charger le document');
+      }
+    } catch (err) {
+      alert('Erreur lors du chargement du document: ' + err.message);
+      setShowPreview(false);
+    } finally {
+      setPreviewLoading(false);
+    }
+  };
+
+  // Fermer l'aperçu
+  const closePreview = () => {
+    setShowPreview(false);
+    setPreviewDocument(null);
+    setZoomLevel(1);
+  };
+
+  // Gérer le zoom
+  const handleZoomIn = () => {
+    setZoomLevel(prev => Math.min(prev + 0.25, 3));
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel(prev => Math.max(prev - 0.25, 0.5));
+  };
+
   // Mettre à jour le statut
   const updateStatus = async (newStatus, reason = null) => {
     try {
@@ -103,7 +179,6 @@ const KycRequestDetailsSections = () => {
       });
 
       if (response && response.ok) {
-        // Recharger les données
         await loadRequestDetails();
         setShowRejectModal(false);
         setRejectionReason('');
@@ -176,7 +251,6 @@ const KycRequestDetailsSections = () => {
 
   // Télécharger un document
   const downloadDocument = (documentPath, documentType) => {
-    // Implémentation du téléchargement selon votre système de fichiers
     const link = document.createElement('a');
     link.href = `${API_BASE_URL}/uploads/${documentPath}`;
     link.download = `${documentType}_${request.publicId}`;
@@ -228,7 +302,7 @@ const KycRequestDetailsSections = () => {
   return (
     <div className="kyc-details">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <main className={`kyc-details-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
+      <main style={{padding:'0px'}} className={`kyc-details-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         
         <div className="kyc-details-content">
@@ -236,7 +310,7 @@ const KycRequestDetailsSections = () => {
           <div className="kyc-details-header">
             <button 
               className="back-button"
-              onClick={() => navigate('/admin/dashboard')}
+              onClick={() => navigate('../../admin/dashboard')}
             >
               <ArrowLeft size={20} />
               Retour
@@ -331,15 +405,26 @@ const KycRequestDetailsSections = () => {
                   <h3>{request.documentType}</h3>
                   <p>ID: {request.documentId}</p>
                 </div>
-                {request.documentPath && (
-                  <button 
-                    className="download-btn"
-                    onClick={() => downloadDocument(request.documentPath, request.documentType)}
-                  >
-                    <Download size={16} />
-                    Télécharger
-                  </button>
-                )}
+                <div className="document-actions">
+                  {request.documentPath && (
+                    <>
+                      <button 
+                        className="preview-btn"
+                        onClick={() => openPreview(request.documentPath, request.documentType)}
+                      >
+                        <Eye size={16} />
+                        Aperçu
+                      </button>
+                      <button 
+                        className="download-btn"
+                        onClick={() => downloadDocument(request.documentPath, request.documentType)}
+                      >
+                        <Download size={16} />
+                        Télécharger
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
               
               <div className="document-item">
@@ -347,15 +432,26 @@ const KycRequestDetailsSections = () => {
                   <h3>{request.justificatifType}</h3>
                   <p>ID: {request.justificatifId}</p>
                 </div>
-                {request.justificatifPath && (
-                  <button 
-                    className="download-btn"
-                    onClick={() => downloadDocument(request.justificatifPath, request.justificatifType)}
-                  >
-                    <Download size={16} />
-                    Télécharger
-                  </button>
-                )}
+                <div className="document-actions">
+                  {request.justificatifPath && (
+                    <>
+                      <button 
+                        className="preview-btn"
+                        onClick={() => openPreview(request.justificatifPath, request.justificatifType)}
+                      >
+                        <Eye size={16} />
+                        Aperçu
+                      </button>
+                      <button 
+                        className="download-btn"
+                        onClick={() => downloadDocument(request.justificatifPath, request.justificatifType)}
+                      >
+                        <Download size={16} />
+                        Télécharger
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -435,6 +531,83 @@ const KycRequestDetailsSections = () => {
               >
                 {updating ? 'Traitement...' : 'Confirmer le rejet'}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal d'aperçu des documents */}
+      {showPreview && (
+        <div className="document-preview-overlay">
+          <div className="document-preview-modal">
+            <div className="document-preview-header">
+              <h3>{previewDocument?.name}</h3>
+              <div className="document-preview-controls">
+                {previewDocument?.type === 'image' && (
+                  <>
+                    <button onClick={handleZoomOut} className="zoom-btn">
+                      <ZoomOut size={18} />
+                    </button>
+                    <span className="zoom-level">{Math.round(zoomLevel * 100)}%</span>
+                    <button onClick={handleZoomIn} className="zoom-btn">
+                      <ZoomIn size={18} />
+                    </button>
+                  </>
+                )}
+                <button 
+                  onClick={() => downloadDocument(previewDocument?.path, previewDocument?.name)}
+                  className="download-preview-btn"
+                >
+                  <Download size={18} />
+                </button>
+                <button onClick={closePreview} className="close-preview-btn">
+                  <X size={20} />
+                </button>
+              </div>
+            </div>
+            
+            <div className="document-preview-content">
+              {previewLoading ? (
+                <div className="preview-loading">
+                  <div className="loading-spinner"></div>
+                  <p>Chargement du document...</p>
+                </div>
+              ) : previewDocument ? (
+                <div className="document-viewer">
+                  {previewDocument.type === 'image' ? (
+                    <img 
+                      src={previewDocument.url}
+                      alt={previewDocument.name}
+                      style={{ 
+                        transform: `scale(${zoomLevel})`,
+                        maxWidth: '100%',
+                        height: 'auto',
+                        transition: 'transform 0.3s ease'
+                      }}
+                    />
+                  ) : previewDocument.type === 'pdf' ? (
+                    <iframe
+                      src={previewDocument.url}
+                      title={previewDocument.name}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 'none', minHeight: '600px' }}
+                    />
+                  ) : (
+                    <div className="unsupported-file">
+                      <FileText size={48} />
+                      <p>Aperçu non disponible pour ce type de fichier</p>
+                      <button 
+                        onClick={() => downloadDocument(previewDocument.path, previewDocument.name)}
+                        className="download-btn"
+                      >
+                        <Download size={16} />
+                        Télécharger le fichier
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

@@ -1,15 +1,15 @@
 import React from 'react';
 import { Shield, Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import './Footer.css';
+import logoMahabo from '../../assets/Images/logo_Mahabo_Kyc.jpg';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
     services: [
-      { href: '#processus', label: 'Processus KYC' },
-      { href: '#suivi', label: 'Suivi de demande' },
-      { href: '#verification', label: 'Vérification d\'identité' },
+      { href: 'tracking', label: 'Suivi de demande' },
+      { href: 'verifykyc', label: 'Vérification d\'identité' },
       { href: '#aide', label: 'Centre d\'aide' }
     ],
     legal: [
@@ -41,7 +41,8 @@ const Footer = () => {
           {/* Informations de l'entreprise */}
           <div className="footer-brand">
             <div className="brand-logo">
-              <Shield className="brand-icon" aria-hidden="true" />
+              {/* <Shield className="brand-icon" aria-hidden="true" /> */}
+              <img className='logo_Mahabo' src={logoMahabo} alt="" />
               <span className="brand-name">Mahabo KYC</span>
             </div>
             

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Shield, ChevronDown } from 'lucide-react';
 import './Header.css';
+import logoMahabo from '../../assets/Images/logo_Mahabo_Kyc.jpg';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,7 +57,8 @@ const Header = () => {
             className="header__logo-link"
             aria-label="Retour à l'accueil - Vérification d'identité sécurisée"
           >
-            <Shield className="header__logo-icon" aria-hidden="true" />
+            {/* <Shield className="header__logo-icon" aria-hidden="true" /> */}
+            <img className='logo_Mahabo' src={logoMahabo} alt="" />
             <span className="header__logo-text">Mahabo KYC</span>
           </a>
         </div>
@@ -109,12 +111,6 @@ const Header = () => {
                   </a>
                 </li>
               </ul>
-            </li>
-
-            <li className="header__nav-item">
-              <a href="/faq" className="header__nav-link">
-                FAQ
-              </a>
             </li>
 
             <li className="header__nav-item">
@@ -178,11 +174,6 @@ const Header = () => {
             <li className="header__mobile-item">
               <a href="/modification" className="header__mobile-link" onClick={toggleMenu}>
                 Modification
-              </a>
-            </li>
-            <li className="header__mobile-item">
-              <a href="/faq" className="header__mobile-link" onClick={toggleMenu}>
-                FAQ
               </a>
             </li>
             <li className="header__mobile-item">

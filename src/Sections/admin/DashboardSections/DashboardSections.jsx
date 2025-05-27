@@ -167,7 +167,7 @@ const DashboardSections = () => {
   return (
     <div className="dashboard">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <main className={`dashboard-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
+      <main style={{padding:'0px'}} className={`dashboard-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
         <Header 
           sidebarOpen={sidebarOpen} 
           setSidebarOpen={setSidebarOpen} 

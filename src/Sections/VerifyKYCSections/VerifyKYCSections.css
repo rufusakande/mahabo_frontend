@@ -2,18 +2,37 @@
 
 /* Variables CSS pour la charte graphique */
 :root {
-  --primary-blue: #1E3A8A;
-  --pure-white: #FFFFFF;
-  --light-gray: #F3F4F6;
-  --emerald-green: #10B981;
-  --coral-red: #EF4444;
-  --golden-yellow: #F59E0B;
-  --dark-gray: #374151;
-  --medium-gray: #6B7280;
-  --border-color: #E5E7EB;
-  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Couleurs principales */
+  --color-primary: #1E3A8A;
+  --color-primary-light: #3B82F6;
+  --color-primary-bg: rgba(30, 58, 138, 0.1);
+  
+  /* Couleurs neutres */
+  --color-white: white;
+  --color-gray-light: #F3F4F6;
+  --color-gray-medium: #6B7280;
+  --color-border: #E5E7EB;
+  
+  /* Couleurs d'état */
+  --color-danger: #EF4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.1);
+  
+  /* Couleurs d'overlay */
+  --color-overlay: rgba(0, 0, 0, 0.5);
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  
+  /* Autres couleurs utiles */
+  --color-success: #10B981;
+  --color-success-bg: rgba(16, 185, 129, 0.1);
+  --color-text-dark: #111827;
+  --color-text-light: #6B7280;
+  
+  /* Ombres */
+  --shadow-light: 0 1px 3px var(--color-shadow);
+  --shadow-medium: 0 4px 6px var(--color-shadow);
   --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.15);
+  
+  /* Transitions */
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -27,27 +46,28 @@
 
 #kycForm {
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--light-gray) 0%, var(--pure-white) 100%);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
-  color: var(--dark-gray);
-  padding: 2rem 1rem;
+  color: var(--color-text-dark);
+  padding: 100px 5% 1rem;
+  background: linear-gradient(135deg, #FAFBFF 0%, #F0F4FF 100%);
 }
 
 #kycForm .container {
-  max-width: 900px;
+  max-width: 1080px;
   margin: 0 auto;
   position: relative;
 }
 
 /* En-tête du formulaire */
 #kycForm .form-container {
-  background: var(--pure-white);
+  background: var(--color-white);
   border-radius: 24px;
   box-shadow: var(--shadow-heavy);
   overflow: hidden;
   position: relative;
   animation: slideUp 0.8s ease-out;
+  border: 1px solid var(--color-border);
 }
 
 #kycForm .form-container::before {
@@ -57,12 +77,12 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--primary-blue), var(--emerald-green));
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
 }
 
 #kycForm .form-header {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, #2563EB 100%);
-  color: var(--pure-white);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  color: var(--color-white);
   padding: 3rem 2rem;
   text-align: center;
   position: relative;
@@ -96,8 +116,8 @@
 /* Indicateur de progression */
 #progressIndicator {
   padding: 2rem;
-  background: var(--pure-white);
-  border-bottom: 1px solid var(--border-color);
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
 }
 
 #progressIndicator .progress-steps {
@@ -125,45 +145,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--light-gray);
-  color: var(--medium-gray);
+  background: var(--color-gray-light);
+  color: var(--color-gray-medium);
   transition: var(--transition-smooth);
   margin-bottom: 0.75rem;
-  border: 3px solid var(--border-color);
+  border: 3px solid var(--color-border);
 }
 
 #progressIndicator .step.active .step-icon {
-  background: var(--primary-blue);
-  color: var(--pure-white);
-  border-color: var(--primary-blue);
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
   transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(30, 58, 138, 0.3);
+  box-shadow: 0 0 20px var(--color-primary-bg);
 }
 
 #progressIndicator .step.completed .step-icon {
-  background: var(--emerald-green);
-  color: var(--pure-white);
-  border-color: var(--emerald-green);
+  background: var(--color-success);
+  color: var(--color-white);
+  border-color: var(--color-success);
   animation: pulse 0.6s ease-out;
 }
 
 #progressIndicator .step-label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--medium-gray);
+  color: var(--color-text-dark);
   transition: var(--transition-smooth);
 }
 
 #progressIndicator .step.active .step-label,
 #progressIndicator .step.completed .step-label {
-  color: var(--primary-blue);
+  color: var(--color-primary);
   font-weight: 600;
 }
 
 #progressIndicator .progress-line {
   flex: 1;
   height: 2px;
-  background: var(--border-color);
+  background: var(--color-border);
   margin: 0 1rem;
   position: relative;
   overflow: hidden;
@@ -175,7 +195,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  background: var(--emerald-green);
+  background: var(--color-success);
   width: 0;
   transition: width 0.8s ease-out;
 }
@@ -188,10 +208,12 @@
 #kycForm .form-content {
   padding: 3rem 2rem;
   min-height: 500px;
+  background: var(--color-white);
 }
 
 #kycForm .form-step {
   animation: fadeInSlide 0.6s ease-out;
+  max-width: 100%;
 }
 
 #kycForm .step-header {
@@ -202,13 +224,13 @@
 #kycForm .step-header h2 {
   font-size: 2rem;
   font-weight: 600;
-  color: var(--primary-blue);
+  color: var(--color-primary);
   margin-bottom: 0.75rem;
 }
 
 #kycForm .step-header p {
   font-size: 1.125rem;
-  color: var(--medium-gray);
+  color: var(--color-text-light);
   max-width: 500px;
   margin: 0 auto;
 }
@@ -235,13 +257,13 @@
   align-items: center;
   gap: 0.5rem;
   font-weight: 500;
-  color: var(--dark-gray);
+  color: var(--color-primary);
   margin-bottom: 0.75rem;
   font-size: 0.95rem;
 }
 
 #kycForm .form-group label svg {
-  color: var(--primary-blue);
+  color: var(--color-primary);
 }
 
 /* Champs de saisie */
@@ -249,35 +271,49 @@
 #kycForm .form-group select {
   width: 100%;
   padding: 1rem 1.25rem;
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--color-border);
   border-radius: 12px;
   font-size: 1rem;
   transition: var(--transition-smooth);
-  background: var(--pure-white);
-  color: var(--dark-gray);
+  background: var(--color-white);
+  color: var(--color-text-dark);
+}
+
+@media screen and (max-width: 600px) {
+  #kycForm .form-group .file-upload{
+    max-width: min-content;
+  }
+
+  #kycForm .form-group .file-upload #idFile{
+    max-width: 100px;
+  }
+}
+
+#kycForm .form-group .file-upload{
+  max-width: 100%;
 }
 
 #kycForm .form-group input:focus,
 #kycForm .form-group select:focus {
   outline: none;
-  border-color: var(--primary-blue);
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-bg);
   transform: translateY(-1px);
 }
 
 #kycForm .form-group input:hover,
 #kycForm .form-group select:hover {
-  border-color: var(--primary-blue);
+  border-color: var(--color-primary-light);
 }
 
 #kycForm .form-group input.error,
 #kycForm .form-group select.error {
-  border-color: var(--coral-red);
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px var(--color-danger-bg);
 }
 
 #kycForm .form-group .error-message {
-  color: var(--coral-red);
+  color: var(--color-danger);
   font-size: 0.875rem;
   margin-top: 0.5rem;
   display: flex;
@@ -295,16 +331,17 @@
 }
 
 #kycForm .document-group {
-  background: var(--light-gray);
+  background: var(--color-gray-light);
   padding: 2rem;
   border-radius: 16px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
   transition: var(--transition-smooth);
 }
 
 #kycForm .document-group:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-medium);
+  background: #FAFBFF;
 }
 
 #kycForm .document-group h3 {
@@ -313,12 +350,12 @@
   gap: 0.75rem;
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--primary-blue);
+  color: var(--color-primary);
   margin-bottom: 1.5rem;
 }
 
 #kycForm .document-group h3 svg {
-  color: var(--primary-blue);
+  color: var(--color-primary);
 }
 
 /* Upload de fichiers */
@@ -332,28 +369,28 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  border: 2px dashed var(--border-color);
+  border: 2px dashed var(--color-border);
   border-radius: 12px;
   cursor: pointer;
   transition: var(--transition-smooth);
-  background: var(--pure-white);
+  background: var(--color-white);
   text-align: center;
   gap: 0.75rem;
 }
 
 #kycForm .upload-label:hover {
-  border-color: var(--primary-blue);
-  background: rgba(30, 58, 138, 0.02);
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg);
   transform: translateY(-1px);
 }
 
 #kycForm .upload-label svg {
-  color: var(--primary-blue);
+  color: var(--color-primary);
 }
 
 #kycForm .upload-label span {
   font-weight: 500;
-  color: var(--dark-gray);
+  color: var(--color-text-dark);
 }
 
 #kycForm .file-input {
@@ -370,20 +407,20 @@
 
 #kycForm .info-summary,
 #kycForm .documents-summary {
-  background: var(--light-gray);
+  background: var(--color-gray-light);
   padding: 2rem;
   border-radius: 16px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
 }
 
 #kycForm .info-summary h3,
 #kycForm .documents-summary h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--primary-blue);
+  color: var(--color-primary);
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 2px solid var(--color-border);
 }
 
 #kycForm .summary-grid {
@@ -396,7 +433,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--color-border);
 }
 
 #kycForm .summary-item:last-child {
@@ -404,12 +441,12 @@
 }
 
 #kycForm .summary-item strong {
-  color: var(--dark-gray);
+  color: var(--color-text-dark);
   font-weight: 500;
 }
 
 #kycForm .summary-item span {
-  color: var(--medium-gray);
+  color: var(--color-text-light);
   text-align: right;
 }
 
@@ -423,13 +460,13 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background: var(--pure-white);
+  background: var(--color-white);
   border-radius: 8px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
 }
 
 #kycForm .preview-item svg {
-  color: var(--primary-blue);
+  color: var(--color-primary);
   flex-shrink: 0;
 }
 
@@ -439,19 +476,19 @@
 
 #kycForm .preview-info strong {
   display: block;
-  color: var(--dark-gray);
+  color: var(--color-text-dark);
   font-weight: 500;
   margin-bottom: 0.25rem;
 }
 
 #kycForm .preview-info span {
   display: block;
-  color: var(--medium-gray);
+  color: var(--color-text-light);
   font-size: 0.875rem;
 }
 
 #kycForm .preview-info .file-name {
-  color: var(--primary-blue);
+  color: var(--color-primary);
   font-weight: 500;
 }
 
@@ -461,8 +498,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
-  background: var(--light-gray);
-  border-top: 1px solid var(--border-color);
+  background: var(--color-gray-light);
+  border-top: 1px solid var(--color-border);
 }
 
 #kycForm .btn {
@@ -491,44 +528,45 @@
 }
 
 #kycForm .btn-primary {
-  background: var(--primary-blue);
-  color: var(--pure-white);
+  background: var(--color-primary);
+  color: var(--color-white);
 }
 
 #kycForm .btn-primary:hover {
-  background: #1E40AF;
-  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
+  background: var(--color-primary-light);
+  box-shadow: 0 8px 25px var(--color-primary-bg);
 }
 
 #kycForm .btn-secondary {
-  background: var(--pure-white);
-  color: var(--primary-blue);
-  border: 2px solid var(--primary-blue);
+  background: var(--color-white);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
 }
 
 #kycForm .btn-secondary:hover {
-  background: var(--primary-blue);
-  color: var(--pure-white);
+  background: var(--color-primary);
+  color: var(--color-white);
 }
 
 #kycForm .btn-success {
-  background: var(--emerald-green);
-  color: var(--pure-white);
+  background: var(--color-success);
+  color: var(--color-white);
 }
 
 #kycForm .btn-success:hover {
   background: #059669;
-  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 8px 25px var(--color-success-bg);
 }
 
 /* Modal de succès */
-#successModal {
+#successModal,
+#errorModal {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--color-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -545,7 +583,7 @@
 }
 
 #successModal .modal-content {
-  background: var(--pure-white);
+  background: var(--color-white);
   border-radius: 24px;
   padding: 3rem 15px;
   max-width: 500px;
@@ -572,25 +610,25 @@
 }
 
 #successModal .success-icon svg {
-  color: var(--emerald-green);
+  color: var(--color-success);
   animation: checkmark 0.8s ease-out;
 }
 
 #successModal h2 {
   font-size: 1.75rem;
   font-weight: 600;
-  color: var(--primary-blue);
+  color: var(--color-primary);
   margin-bottom: 1rem;
 }
 
 #successModal p {
-  color: var(--medium-gray);
+  color: var(--color-text-light);
   margin-bottom: 2rem;
   line-height: 1.6;
 }
 
 #successModal .verification-code {
-  background: var(--light-gray);
+  background: var(--color-gray-light);
   padding: 1.5rem;
   border-radius: 12px;
   margin-bottom: 2rem;
@@ -598,7 +636,7 @@
 
 #successModal .verification-code h3 {
   font-size: 1.125rem;
-  color: var(--primary-blue);
+  color: var(--color-primary);
   margin-bottom: 1rem;
 }
 
@@ -606,18 +644,18 @@
   font-family: 'Monaco', 'Menlo', monospace;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--primary-blue);
-  background: var(--pure-white);
+  color: var(--color-primary);
+  background: var(--color-white);
   padding: 1rem;
   border-radius: 8px;
-  border: 2px solid var(--primary-blue);
+  border: 2px solid var(--color-primary);
   margin-bottom: 0.75rem;
   letter-spacing: 2px;
 }
 
 #successModal .verification-code p {
   font-size: 0.875rem;
-  color: var(--medium-gray);
+  color: var(--color-text-light);
   margin: 0;
 }
 
@@ -628,7 +666,7 @@
 
 #successModal .next-steps h4 {
   font-size: 1rem;
-  color: var(--primary-blue);
+  color: var(--color-primary);
   margin-bottom: 1rem;
 }
 
@@ -639,7 +677,7 @@
 
 #successModal .next-steps li {
   padding: 0.5rem 0;
-  color: var(--medium-gray);
+  color: var(--color-text-light);
   position: relative;
   padding-left: 1.5rem;
 }
@@ -648,7 +686,7 @@
   content: '✓';
   position: absolute;
   left: 0;
-  color: var(--emerald-green);
+  color: var(--color-success);
   font-weight: bold;
 }
 
@@ -721,6 +759,20 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+#kycForm .spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+#kycForm .error-modal .error-icon {
+  color: var(--color-danger);
+  margin-bottom: 1rem;
 }
 
 /* Responsive Design */
@@ -848,7 +900,7 @@
 /* Montres connectées et très petits écrans */
 @media (max-width: 320px) {
   #kycForm {
-    padding: 0.5rem 0.25rem;
+    padding: 80px 5% 50px;
   }
 
   #kycForm .form-container {
@@ -900,41 +952,4 @@
     font-size: 1rem;
     padding: 0.75rem;
   }
-}
-
-/* Mode sombre (optionnel) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --light-gray: #1F2937;
-    --pure-white: #111827;
-    --dark-gray: #F9FAFB;
-    --medium-gray: #D1D5DB;
-    --border-color: #374151;
-  }
-
-  #kycForm {
-    background: linear-gradient(135deg, #111827 0%, #1F2937 100%);
-  }
-
-  #kycForm .form-group input,
-  #kycForm .form-group select,
-  #kycForm .upload-label {
-    background: #1F2937;
-    color: var(--dark-gray);
-    border-color: var(--border-color);
-  }
-}
-
-#kycForm .spinning {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-#kycForm .error-modal .error-icon {
-  color: #ef4444;
-  margin-bottom: 1rem;
 }

@@ -65,6 +65,12 @@
   margin-bottom: 0.5rem;
 }
 
+#footer .brand-logo .logo_Mahabo{
+  width: auto;
+  height: 65px;
+  border-radius: 8px;margin-right: 8px;
+}
+
 #footer .brand-icon {
   width: 36px;
   height: 36px;

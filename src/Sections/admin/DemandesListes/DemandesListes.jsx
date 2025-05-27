@@ -250,7 +250,7 @@ const DemandesListes = () => {
   return (
     <div className="all-kyc-requests">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <main className={`all-kyc-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
+      <main style={{padding:'0px'}} className={`all-kyc-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         
         <div className="all-kyc-content">
