@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { 
   Edit3, 
   Shield, 
@@ -76,7 +76,7 @@ const KYCModificationSection = () => {
     return () => clearInterval(interval);
   }, [timeLeft]);
 
-  // Utilitaires
+  // Utilitaires - Mémorisés pour éviter les re-créations
   const formatTime = useCallback((seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -88,8 +88,16 @@ const KYCModificationSection = () => {
     setTimeout(() => setMessage({ type: '', text: '' }), 5000);
   }, []);
 
-  // Gestionnaires d'événements
-  const handleRequestEditCode = async () => {
+  // Gestionnaires d'événements - Tous mémorisés avec useCallback
+  const handlePublicIdChange = useCallback((e) => {
+    setPublicId(e.target.value.toUpperCase());
+  }, []);
+
+  const handleEditCodeChange = useCallback((e) => {
+    setEditCode(e.target.value.toUpperCase());
+  }, []);
+
+  const handleRequestEditCode = useCallback(async () => {
     if (!publicId.trim()) {
       showMessage('error', 'Veuillez saisir votre code de suivi');
       return;
@@ -116,9 +124,9 @@ const KYCModificationSection = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [publicId, API_BASE_URL, showMessage]);
 
-  const handleValidateCode = async () => {
+  const handleValidateCode = useCallback(async () => {
     if (!editCode.trim() || editCode.length !== 6) {
       showMessage('error', 'Veuillez saisir un code à 6 caractères');
       return;
@@ -158,11 +166,26 @@ const KYCModificationSection = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [editCode, publicId, API_BASE_URL, showMessage]);
 
+  // Gestionnaire optimisé pour les changements de formulaire
   const handleInputChange = useCallback((field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   }, []);
+
+  // Créer des fonctions spécifiques pour chaque champ
+  const handleNomChange = useCallback((e) => handleInputChange('nom', e.target.value), [handleInputChange]);
+  const handlePrenomsChange = useCallback((e) => handleInputChange('prenoms', e.target.value), [handleInputChange]);
+  const handleSexChange = useCallback((e) => handleInputChange('sex', e.target.value), [handleInputChange]);
+  const handleDateNaissanceChange = useCallback((e) => handleInputChange('dateNaissance', e.target.value), [handleInputChange]);
+  const handleNationaliteChange = useCallback((e) => handleInputChange('nationalite', e.target.value), [handleInputChange]);
+  const handleAddressChange = useCallback((e) => handleInputChange('address', e.target.value), [handleInputChange]);
+  const handleTelephoneChange = useCallback((e) => handleInputChange('telephone', e.target.value), [handleInputChange]);
+  const handleEmailChange = useCallback((e) => handleInputChange('email', e.target.value), [handleInputChange]);
+  const handleDocumentTypeChange = useCallback((e) => handleInputChange('documentType', e.target.value), [handleInputChange]);
+  const handleDocumentIdChange = useCallback((e) => handleInputChange('documentId', e.target.value), [handleInputChange]);
+  const handleJustificatifTypeChange = useCallback((e) => handleInputChange('justificatifType', e.target.value), [handleInputChange]);
+  const handleJustificatifIdChange = useCallback((e) => handleInputChange('justificatifId', e.target.value), [handleInputChange]);
 
   const handleFileChange = useCallback((type, file) => {
     if (!file) return;
@@ -197,10 +220,12 @@ const KYCModificationSection = () => {
     setFilePreview(prev => ({ ...prev, [type]: null }));
   }, []);
 
-  const handleSubmitModification = async () => {
+  const handleSubmitModification = useCallback(async () => {
     setLoading(true);
     try {
       const formDataToSend = new FormData();
+
+      formDataToSend.append('editCode', editCode);
       
       Object.entries(formData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
@@ -209,6 +234,7 @@ const KYCModificationSection = () => {
       if (files.document) formDataToSend.append('document', files.document);
       if (files.justificatif) formDataToSend.append('justificatif', files.justificatif);
 
+      console.log("formDataToSend : ", editCode)
       const response = await fetch(`${API_BASE_URL}/kyc/${publicId}`, {
         method: 'PUT',
         body: formDataToSend,
@@ -219,101 +245,125 @@ const KYCModificationSection = () => {
       if (response.ok) {
         showMessage('success', data.message || 'Modifications enregistrées avec succès');
         setTimeout(() => {
-          window.location.href = '/suivi';
+          window.location.href = '/tracking';
         }, 2000);
       } else {
         showMessage('error', data.error || 'Erreur lors de la sauvegarde');
       }
     } catch (error) {
+      console.error('Erreur lors de la soumission:', error);
       showMessage('error', 'Erreur de connexion au serveur');
     } finally {
       setLoading(false);
     }
-  };
+  }, [formData, files, publicId, API_BASE_URL, showMessage]);
 
-  // Composants de rendu
-  const StepHeader = ({ icon: Icon, title, subtitle }) => (
-    <div className="step-header">
-      <div className="step-icon">
-        <Icon className="icon" />
+  const handleBackClick = useCallback(() => {
+    window.history.back();
+  }, []);
+
+  // Composants mémorisés pour éviter les re-rendus
+  const StepHeader = useMemo(() => {
+    return ({ icon: Icon, title, subtitle }) => (
+      <div className="step-header">
+        <div className="step-icon">
+          <Icon className="icon" />
+        </div>
+        <h2>{title}</h2>
+        <p>{subtitle}</p>
       </div>
-      <h2>{title}</h2>
-      <p>{subtitle}</p>
-    </div>
-  );
+    );
+  }, []);
 
-  const FormInput = ({ label, children, help }) => (
-    <div className="form-group">
-      <label>{label}</label>
-      {children}
-      {help && <small>{help}</small>}
-    </div>
-  );
+  const FormInput = useMemo(() => {
+    return ({ label, children, help }) => (
+      <div className="form-group">
+        <label>{label}</label>
+        {children}
+        {help && <small>{help}</small>}
+      </div>
+    );
+  }, []);
 
-  const FileUpload = ({ type, label, accept = "image/*,.pdf" }) => (
-    <div className="file-upload-section">
-      <label className="file-upload-label">{label}</label>
-      <div className="file-upload-area">
-        {!files[type] && !filePreview[type] ? (
-          <label className="file-upload-button">
-            <input
-              type="file"
-              accept={accept}
-              onChange={(e) => handleFileChange(type, e.target.files[0])}
-              style={{ display: 'none' }}
-            />
-            <Upload className="icon" />
-            <span>Cliquer pour sélectionner un fichier</span>
-            <small>JPG, PNG ou PDF (max 5MB)</small>
-          </label>
-        ) : (
-          <div className="file-preview">
-            {filePreview[type] === 'pdf' ? (
-              <div className="pdf-preview">
-                <FileText className="icon" />
-                <span>{files[type]?.name || 'Document PDF'}</span>
+  const FileUpload = useCallback(({ type, label, accept = "image/*,.pdf" }) => {
+    const handleDocumentFileChange = useCallback((e) => {
+      handleFileChange(type, e.target.files[0]);
+    }, [type]);
+
+    const handleRemoveFile = useCallback(() => {
+      removeFile(type);
+    }, [type]);
+
+    return (
+      <div className="file-upload-section">
+        <label className="file-upload-label">{label}</label>
+        <div className="file-upload-area">
+          {!files[type] && !filePreview[type] ? (
+            <label className="file-upload-button">
+              <input
+                type="file"
+                accept={accept}
+                onChange={handleDocumentFileChange}
+                style={{ display: 'none' }}
+              />
+              <Upload className="icon" />
+              <span>Cliquer pour sélectionner un fichier</span>
+              <small>JPG, PNG ou PDF (max 5MB)</small>
+            </label>
+          ) : (
+            <div className="file-preview">
+              {filePreview[type] === 'pdf' ? (
+                <div className="pdf-preview">
+                  <FileText className="icon" />
+                  <span>{files[type]?.name || 'Document PDF'}</span>
+                </div>
+              ) : filePreview[type] ? (
+                <img src={filePreview[type]} alt="Preview" className="image-preview" />
+              ) : (
+                <div className="existing-file">
+                  <FileText className="icon" />
+                  <span>Fichier existant</span>
+                </div>
+              )}
+              <div className="file-actions">
+                <button
+                  type="button"
+                  onClick={handleRemoveFile}
+                  className="btn-remove"
+                >
+                  <X className="icon" />
+                </button>
+                <label className="btn-change">
+                  <input
+                    type="file"
+                    accept={accept}
+                    onChange={handleDocumentFileChange}
+                    style={{ display: 'none' }}
+                  />
+                  Changer
+                </label>
               </div>
-            ) : filePreview[type] ? (
-              <img src={filePreview[type]} alt="Preview" className="image-preview" />
-            ) : (
-              <div className="existing-file">
-                <FileText className="icon" />
-                <span>Fichier existant</span>
-              </div>
-            )}
-            <div className="file-actions">
-              <button
-                type="button"
-                onClick={() => removeFile(type)}
-                className="btn-remove"
-              >
-                <X className="icon" />
-              </button>
-              <label className="btn-change">
-                <input
-                  type="file"
-                  accept={accept}
-                  onChange={(e) => handleFileChange(type, e.target.files[0])}
-                  style={{ display: 'none' }}
-                />
-                Changer
-              </label>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }, [files, filePreview, handleFileChange, removeFile]);
 
-  const Message = () => message.text && (
-    <div className={`message message-${message.type}`} role="alert">
-      {message.type === 'success' ? <CheckCircle className="icon" /> : <AlertCircle className="icon" />}
-      {message.text}
-    </div>
-  );
+  // Message mémorisé
+  const MessageComponent = useMemo(() => {
+    if (!message.text) return null;
+    
+    return (
+      <div className={`message message-${message.type}`} role="alert">
+        {message.type === 'success' ? <CheckCircle className="icon" /> : <AlertCircle className="icon" />}
+        {message.text}
+      </div>
+    );
+  }, [message]);
 
-  // Rendu des étapes
-  const renderStep1 = () => (
+  // Rendu des étapes - Mémorisés pour éviter les re-créations
+  const step1Content = useMemo(() => (
     <div className="step-content">
       <StepHeader 
         icon={Shield}
@@ -329,7 +379,7 @@ const KYCModificationSection = () => {
           <input
             type="text"
             value={publicId}
-            onChange={(e) => setPublicId(e.target.value.toUpperCase())}
+            onChange={handlePublicIdChange}
             placeholder="KYC-MAHABO-20240526-ABC123"
             className="form-input"
           />
@@ -346,9 +396,9 @@ const KYCModificationSection = () => {
         {loading ? 'Envoi en cours...' : 'Demander le code de modification'}
       </button>
     </div>
-  );
+  ), [publicId, loading, handlePublicIdChange, handleRequestEditCode, StepHeader, FormInput]);
 
-  const renderStep2 = () => (
+  const step2Content = useMemo(() => (
     <div className="step-content">
       <StepHeader 
         icon={Clock}
@@ -369,7 +419,7 @@ const KYCModificationSection = () => {
           <input
             type="text"
             value={editCode}
-            onChange={(e) => setEditCode(e.target.value.toUpperCase())}
+            onChange={handleEditCodeChange}
             placeholder="A1B2C3"
             className="form-input code-input"
             maxLength="6"
@@ -398,9 +448,9 @@ const KYCModificationSection = () => {
         </button>
       </div>
     </div>
-  );
+  ), [editCode, timeLeft, loading, handleEditCodeChange, handleValidateCode, handleRequestEditCode, formatTime, StepHeader, FormInput]);
 
-  const renderStep3 = () => (
+  const step3Content = useMemo(() => (
     <div className="step-content">
       <StepHeader 
         icon={Edit3}
@@ -418,7 +468,7 @@ const KYCModificationSection = () => {
               <input
                 type="text"
                 value={formData.nom}
-                onChange={(e) => handleInputChange('nom', e.target.value)}
+                onChange={handleNomChange}
                 className="form-input"
                 required
               />
@@ -428,7 +478,7 @@ const KYCModificationSection = () => {
               <input
                 type="text"
                 value={formData.prenoms}
-                onChange={(e) => handleInputChange('prenoms', e.target.value)}
+                onChange={handlePrenomsChange}
                 className="form-input"
                 required
               />
@@ -439,7 +489,7 @@ const KYCModificationSection = () => {
             <FormInput label="Sexe">
               <select
                 value={formData.sex}
-                onChange={(e) => handleInputChange('sex', e.target.value)}
+                onChange={handleSexChange}
                 className="form-select"
                 required
               >
@@ -454,7 +504,7 @@ const KYCModificationSection = () => {
                 <input
                   type="date"
                   value={formData.dateNaissance}
-                  onChange={(e) => handleInputChange('dateNaissance', e.target.value)}
+                  onChange={handleDateNaissanceChange}
                   className="form-input"
                   required
                 />
@@ -468,7 +518,7 @@ const KYCModificationSection = () => {
               <input
                 type="text"
                 value={formData.nationalite}
-                onChange={(e) => handleInputChange('nationalite', e.target.value)}
+                onChange={handleNationaliteChange}
                 className="form-input"
                 required
               />
@@ -480,7 +530,7 @@ const KYCModificationSection = () => {
             <div className="input-wrapper">
               <textarea
                 value={formData.address}
-                onChange={(e) => handleInputChange('address', e.target.value)}
+                onChange={handleAddressChange}
                 className="form-textarea"
                 rows="3"
                 required
@@ -495,7 +545,7 @@ const KYCModificationSection = () => {
                 <input
                   type="tel"
                   value={formData.telephone}
-                  onChange={(e) => handleInputChange('telephone', e.target.value)}
+                  onChange={handleTelephoneChange}
                   className="form-input"
                   required
                 />
@@ -508,7 +558,7 @@ const KYCModificationSection = () => {
                 <input
                   type="email"
                   value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  onChange={handleEmailChange}
                   className="form-input"
                   required
                 />
@@ -526,7 +576,7 @@ const KYCModificationSection = () => {
             <FormInput label="Type de document">
               <select
                 value={formData.documentType}
-                onChange={(e) => handleInputChange('documentType', e.target.value)}
+                onChange={handleDocumentTypeChange}
                 className="form-select"
                 required
               >
@@ -541,7 +591,7 @@ const KYCModificationSection = () => {
               <input
                 type="text"
                 value={formData.documentId}
-                onChange={(e) => handleInputChange('documentId', e.target.value)}
+                onChange={handleDocumentIdChange}
                 className="form-input"
                 required
               />
@@ -554,7 +604,7 @@ const KYCModificationSection = () => {
             <FormInput label="Type de justificatif">
               <select
                 value={formData.justificatifType}
-                onChange={(e) => handleInputChange('justificatifType', e.target.value)}
+                onChange={handleJustificatifTypeChange}
                 className="form-select"
                 required
               >
@@ -569,7 +619,7 @@ const KYCModificationSection = () => {
               <input
                 type="text"
                 value={formData.justificatifId}
-                onChange={(e) => handleInputChange('justificatifId', e.target.value)}
+                onChange={handleJustificatifIdChange}
                 className="form-input"
                 required
               />
@@ -591,9 +641,12 @@ const KYCModificationSection = () => {
         </button>
       </div>
     </div>
-  );
+  ), [formData, loading, handleSubmitModification, FileUpload, StepHeader, FormInput,
+      handleNomChange, handlePrenomsChange, handleSexChange, handleDateNaissanceChange,
+      handleNationaliteChange, handleAddressChange, handleTelephoneChange, handleEmailChange,
+      handleDocumentTypeChange, handleDocumentIdChange, handleJustificatifTypeChange, handleJustificatifIdChange]);
 
-  const Sidebar = () => (
+  const Sidebar = useMemo(() => (
     <aside className="sidebarKYCModification">
       <div className="help-section">
         <h3>Instructions</h3>
@@ -622,13 +675,13 @@ const KYCModificationSection = () => {
         </div>
       </div>
     </aside>
-  );
+  ), [currentStep]);
 
   return (
     <div id='kyc-modification' className="kyc-modification">
       <header className="page-header">
         <div style={{paddingTop:'100px'}} className="container">
-          <button className="back-button" onClick={() => window.history.back()}>
+          <button className="back-button" onClick={handleBackClick}>
             <ArrowLeft className="icon" />
             Retour
           </button>
@@ -640,14 +693,14 @@ const KYCModificationSection = () => {
       </header>
 
       <div className="content-grid">
-            <div className="form-section">
-              <Message />
-              {currentStep === STEPS.VERIFICATION && renderStep1()}
-              {currentStep === STEPS.CODE_VALIDATION && renderStep2()}
-              {currentStep === STEPS.MODIFICATION && renderStep3()}
-            </div>
-            <Sidebar />
-          </div>
+        <div className="form-section">
+          {MessageComponent}
+          {currentStep === STEPS.VERIFICATION && step1Content}
+          {currentStep === STEPS.CODE_VALIDATION && step2Content}
+          {currentStep === STEPS.MODIFICATION && step3Content}
+        </div>
+        {Sidebar}
+      </div>
     </div>
   );
 };
