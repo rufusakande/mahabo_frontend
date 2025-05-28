@@ -211,22 +211,6 @@ const TrackingSections = () => {
                 </div>
               </div>
             </div>
-
-            {/* Action Buttons */}
-            <div className="action-buttons">
-              {(demandData.status === 'rejected' || demandData.status === 'pending') && (
-                <button 
-                  className="btn btn-primary"
-                  onClick={sendEditCode}
-                  disabled={loading}
-                >
-                  {loading ? 'Envoi en cours...' : 'Recevoir un code de modification'}
-                </button>
-              )}
-              <button className="btn btn-secondary">
-                Contacter le support
-              </button>
-            </div>
           </div>
         </section>
       )}

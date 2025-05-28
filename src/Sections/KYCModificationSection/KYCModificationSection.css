@@ -246,15 +246,16 @@
   position: relative;
 }
 
-.form-input,
-.form-select,
-.form-textarea {
+#form-section-kyc-modification .form-input,
+#form-section-kyc-modification .form-select,
+#form-section-kyc-modification .form-textarea {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 2px solid var(--color-border);
   border-radius: 0.5rem;
   font-size: 1rem;
   transition: all 0.2s;
+  color: black;
   background: var(--color-white);
 }
 

@@ -383,7 +383,7 @@ const KycRequestDetailsSections = () => {
                   {request.telephone}
                 </span>
               </div>
-              <div className="info-item full-width">
+              <div className="info-item">
                 <label>Adresse</label>
                 <span>
                   <MapPin size={16} />
