@@ -1,6 +1,7 @@
 import React from 'react';
 import { Users, X, Home, List, LogOut, Settings } from 'lucide-react';
 import './Sidebar.css';
+import { Link } from 'react-router-dom';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
@@ -36,22 +37,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         <nav className="sidebar-nav">
           <ul className="sidebar-nav-list">
             <li>
-              <a href="dashboard" className="sidebar-nav-link active">
+              <Link to="../../admin/dashboard" className="sidebar-nav-link active">
                 <Home size={20} />
                 Dashboard
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="demandes" className="sidebar-nav-link">
+              <Link to="../../admin/demandes" className="sidebar-nav-link">
                 <List size={20} />
                 Demandes KYC
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="sidebar-nav-link">
+              <Link to="#" className="sidebar-nav-link">
                 <Settings size={20} />
                 Paramètres
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

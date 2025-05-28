@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Shield, ChevronDown } from 'lucide-react';
+import { useLocation } from 'react-router-dom'; // Si vous utilisez React Router
 import './Header.css';
 import logoMahabo from '../../assets/Images/logo_Mahabo_Kyc.jpg';
 
@@ -7,6 +8,21 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  
+  // Récupérer la route actuelle
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  // Fonction pour vérifier si un lien est actif
+  const isActiveLink = (path) => {
+    return currentPath === path;
+  };
+
+  // Fonction pour vérifier si le dropdown Services est actif
+  const isServicesActive = () => {
+    const servicesPaths = ['/verifykyc', '/tracking', '/modification'];
+    return servicesPaths.includes(currentPath);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,7 +73,6 @@ const Header = () => {
             className="header__logo-link"
             aria-label="Retour à l'accueil - Vérification d'identité sécurisée"
           >
-            {/* <Shield className="header__logo-icon" aria-hidden="true" /> */}
             <img className='logo_Mahabo' src={logoMahabo} alt="" />
             <span className="header__logo-text">Mahabo KYC</span>
           </a>
@@ -67,18 +82,25 @@ const Header = () => {
         <nav className="header__nav" role="navigation" aria-label="Navigation principale">
           <ul className="header__nav-list">
             <li className="header__nav-item">
-              <a href="/" className="header__nav-link" aria-current="page">
+              <a 
+                href="/" 
+                className="header__nav-link" 
+                aria-current={isActiveLink('/') ? 'page' : undefined}
+              >
                 Accueil
               </a>
             </li>
             
             <li className="header__nav-item header__nav-dropdown">
               <button
-                className="header__nav-link header__nav-dropdown-trigger"
+                className={`header__nav-link header__nav-dropdown-trigger ${
+                  isServicesActive() ? 'header__nav-link--active' : ''
+                }`}
                 onClick={() => toggleDropdown('services')}
                 onKeyDown={(e) => handleKeyDown(e, () => toggleDropdown('services'))}
                 aria-expanded={activeDropdown === 'services'}
                 aria-haspopup="true"
+                aria-current={isServicesActive() ? 'page' : undefined}
               >
                 Services
                 <ChevronDown 
@@ -96,17 +118,35 @@ const Header = () => {
                 role="menu"
               >
                 <li role="none">
-                  <a href="/verifykyc" className="header__nav-dropdown-link" role="menuitem">
+                  <a 
+                    href="/verifykyc" 
+                    className={`header__nav-dropdown-link ${
+                      isActiveLink('/verifykyc') ? 'header__nav-dropdown-link--active' : ''
+                    }`}
+                    role="menuitem"
+                  >
                     Vérification KYC
                   </a>
                 </li>
                 <li role="none">
-                  <a href="/tracking" className="header__nav-dropdown-link" role="menuitem">
+                  <a 
+                    href="/tracking" 
+                    className={`header__nav-dropdown-link ${
+                      isActiveLink('/tracking') ? 'header__nav-dropdown-link--active' : ''
+                    }`}
+                    role="menuitem"
+                  >
                     Suivi de demande
                   </a>
                 </li>
                 <li role="none">
-                  <a href="/modification" className="header__nav-dropdown-link" role="menuitem">
+                  <a 
+                    href="/modification" 
+                    className={`header__nav-dropdown-link ${
+                      isActiveLink('/modification') ? 'header__nav-dropdown-link--active' : ''
+                    }`}
+                    role="menuitem"
+                  >
                     Modification
                   </a>
                 </li>
@@ -114,7 +154,11 @@ const Header = () => {
             </li>
 
             <li className="header__nav-item">
-              <a href="/contact" className="header__nav-link">
+              <a 
+                href="/contact" 
+                className="header__nav-link"
+                aria-current={isActiveLink('/contact') ? 'page' : undefined}
+              >
                 Contact
               </a>
             </li>
@@ -157,27 +201,57 @@ const Header = () => {
         >
           <ul className="header__mobile-list">
             <li className="header__mobile-item">
-              <a href="/" className="header__mobile-link" onClick={toggleMenu}>
+              <a 
+                href="/" 
+                className={`header__mobile-link ${
+                  isActiveLink('/') ? 'header__mobile-link--active' : ''
+                }`}
+                onClick={toggleMenu}
+              >
                 Accueil
               </a>
             </li>
             <li className="header__mobile-item">
-              <a href="/verifykyc" className="header__mobile-link" onClick={toggleMenu}>
+              <a 
+                href="/verifykyc" 
+                className={`header__mobile-link ${
+                  isActiveLink('/verifykyc') ? 'header__mobile-link--active' : ''
+                }`}
+                onClick={toggleMenu}
+              >
                 Vérification KYC
               </a>
             </li>
             <li className="header__mobile-item">
-              <a href="/tracking" className="header__mobile-link" onClick={toggleMenu}>
+              <a 
+                href="/tracking" 
+                className={`header__mobile-link ${
+                  isActiveLink('/tracking') ? 'header__mobile-link--active' : ''
+                }`}
+                onClick={toggleMenu}
+              >
                 Suivi de demande
               </a>
             </li>
             <li className="header__mobile-item">
-              <a href="/modification" className="header__mobile-link" onClick={toggleMenu}>
+              <a 
+                href="/modification" 
+                className={`header__mobile-link ${
+                  isActiveLink('/modification') ? 'header__mobile-link--active' : ''
+                }`}
+                onClick={toggleMenu}
+              >
                 Modification
               </a>
             </li>
             <li className="header__mobile-item">
-              <a href="/contact" className="header__mobile-link" onClick={toggleMenu}>
+              <a 
+                href="/contact" 
+                className={`header__mobile-link ${
+                  isActiveLink('/contact') ? 'header__mobile-link--active' : ''
+                }`}
+                onClick={toggleMenu}
+              >
                 Contact
               </a>
             </li>

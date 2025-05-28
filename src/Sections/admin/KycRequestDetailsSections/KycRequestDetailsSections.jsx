@@ -291,7 +291,7 @@ const KycRequestDetailsSections = () => {
       <div className="kyc-details">
         <div className="kyc-details-error">
           <p>Demande non trouvée</p>
-          <button onClick={() => navigate('/admin/dashboard')} className="back-btn">
+          <button onClick={() => navigate('../../admin/dashboard')} className="back-btn">
             Retour au tableau de bord
           </button>
         </div>
@@ -310,7 +310,7 @@ const KycRequestDetailsSections = () => {
           <div className="kyc-details-header">
             <button 
               className="back-button"
-              onClick={() => navigate('../../admin/dashboard')}
+              onClick={() => navigate('../../admin/demandes')}
             >
               <ArrowLeft size={20} />
               Retour
@@ -415,13 +415,13 @@ const KycRequestDetailsSections = () => {
                         <Eye size={16} />
                         Aperçu
                       </button>
-                      <button 
+                      {/* <button 
                         className="download-btn"
                         onClick={() => downloadDocument(request.documentPath, request.documentType)}
                       >
                         <Download size={16} />
                         Télécharger
-                      </button>
+                      </button> */}
                     </>
                   )}
                 </div>
@@ -442,13 +442,13 @@ const KycRequestDetailsSections = () => {
                         <Eye size={16} />
                         Aperçu
                       </button>
-                      <button 
+                      {/* <button 
                         className="download-btn"
                         onClick={() => downloadDocument(request.justificatifPath, request.justificatifType)}
                       >
                         <Download size={16} />
                         Télécharger
-                      </button>
+                      </button> */}
                     </>
                   )}
                 </div>

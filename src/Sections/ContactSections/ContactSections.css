@@ -22,7 +22,7 @@
         .contact-hero {
           background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
           color: var(--color-white);
-          padding: 4rem 1rem 6rem;
+          padding: 100px 5% 6rem;
           text-align: center;
           position: relative;
           overflow: hidden;
@@ -50,6 +50,7 @@
           font-weight: 700;
           margin: 0 0 1rem 0;
           line-height: 1.2;
+          color: white;
         }
 
         .hero-subtitle {
@@ -82,7 +83,7 @@
           }
         }
 
-        .contact-info {
+        #contact .contact-info {
           background: var(--color-white);
           border-radius: 16px;
           padding: 2rem;
@@ -90,25 +91,26 @@
           border: 1px solid var(--color-border);
         }
 
-        .info-title {
+        #contact .info-title {
           font-size: 1.5rem;
           font-weight: 600;
           color: var(--color-primary);
           margin: 0 0 1.5rem 0;
         }
 
-        .info-item {
+        #contact .info-item {
           display: flex;
           align-items: center;
           padding: 1rem 0;
+          text-align: center;
           border-bottom: 1px solid var(--color-border);
         }
 
-        .info-item:last-child {
+        #contact .info-item:last-child {
           border-bottom: none;
         }
 
-        .info-icon {
+        #contact .info-icon {
           width: 48px;
           height: 48px;
           background: var(--color-primary-bg);
@@ -120,40 +122,40 @@
           flex-shrink: 0;
         }
 
-        .info-icon svg {
+        #contact .info-icon svg {
           color: var(--color-primary);
         }
 
-        .info-details h3 {
+        #contact .info-details h3 {
           font-size: 1rem;
           font-weight: 600;
           margin: 0 0 0.25rem 0;
           color: #111827;
         }
 
-        .info-details p {
+        #contact .info-details p {
           margin: 0;
           color: var(--color-gray-medium);
           font-size: 0.9rem;
         }
 
-        .info-details a {
+        #contact .info-details a {
           color: var(--color-primary);
           text-decoration: none;
           transition: color 0.2s;
         }
 
-        .info-details a:hover {
+        #contact .info-details a:hover {
           color: var(--color-primary-light);
         }
 
-        .hours-section {
+        #contact .hours-section {
           margin-top: 2rem;
           padding-top: 2rem;
           border-top: 1px solid var(--color-border);
         }
 
-        .hours-title {
+        #contact .hours-title {
           font-size: 1.125rem;
           font-weight: 600;
           color: var(--color-primary);
@@ -163,19 +165,19 @@
           gap: 0.5rem;
         }
 
-        .hours-list {
+        #contact .hours-list {
           list-style: none;
           padding: 0;
           margin: 0;
         }
 
-        .hours-list li {
+        #contact .hours-list li {
           padding: 0.5rem 0;
           color: var(--color-gray-medium);
           font-size: 0.9rem;
         }
 
-        .contact-form {
+        #contact .contact-form {
           background: var(--color-white);
           border-radius: 16px;
           padding: 2rem;
@@ -183,14 +185,14 @@
           border: 1px solid var(--color-border);
         }
 
-        .form-title {
+        #contact .form-title {
           font-size: 1.5rem;
           font-weight: 600;
           color: var(--color-primary);
           margin: 0 0 1.5rem 0;
         }
 
-        .status-message {
+        #contact .status-message {
           padding: 1rem;
           border-radius: 8px;
           margin-bottom: 1.5rem;
@@ -200,19 +202,19 @@
           font-size: 0.9rem;
         }
 
-        .success-message {
+        #contact .success-message {
           background: #ECFDF5;
           color: #065F46;
           border: 1px solid #A7F3D0;
         }
 
-        .error-message {
+        #contact .error-message {
           background: var(--color-danger-bg);
           color: #991B1B;
           border: 1px solid #FCA5A5;
         }
 
-        .form-row {
+        #contact .form-row {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 1rem;
@@ -220,16 +222,16 @@
         }
 
         @media (max-width: 640px) {
-          .form-row {
+          #contact .form-row {
             grid-template-columns: 1fr;
           }
         }
 
-        .form-group {
+        #contact .form-group {
           margin-bottom: 1.5rem;
         }
 
-        .form-label {
+        #contact .form-label {
           display: flex;
           align-items: center;
           gap: 0.5rem;
@@ -239,12 +241,12 @@
           font-size: 0.9rem;
         }
 
-        .form-label svg {
+        #contact .form-label svg {
           color: var(--color-primary);
         }
 
-        .form-input,
-        .form-textarea {
+        #contact .form-input,
+        #contact .form-textarea {
           width: 100%;
           padding: 0.875rem 1rem;
           border: 2px solid var(--color-border);
@@ -255,32 +257,32 @@
           box-sizing: border-box;
         }
 
-        .form-input:focus,
-        .form-textarea:focus {
+        #contact .form-input:focus,
+        #contact .form-textarea:focus {
           outline: none;
           border-color: var(--color-primary);
           box-shadow: 0 0 0 3px var(--color-primary-bg);
         }
 
-        .form-input.error,
-        .form-textarea.error {
+        #contact .form-input.error,
+        #contact .form-textarea.error {
           border-color: var(--color-danger);
           box-shadow: 0 0 0 3px var(--color-danger-bg);
         }
 
-        .form-textarea {
+        #contact .form-textarea {
           resize: vertical;
           min-height: 120px;
         }
 
-        .error-text {
+        #contact .error-text {
           color: var(--color-danger);
           font-size: 0.875rem;
           margin-top: 0.25rem;
           display: block;
         }
 
-        .submit-button {
+        #contact .submit-button {
           width: 100%;
           background: var(--color-primary);
           color: var(--color-white);
@@ -298,19 +300,19 @@
           margin-bottom: 1rem;
         }
 
-        .submit-button:hover:not(:disabled) {
+        #contact .submit-button:hover:not(:disabled) {
           background: var(--color-primary-light);
           transform: translateY(-1px);
           box-shadow: 0 4px 12px var(--color-shadow);
         }
 
-        .submit-button:disabled {
+        #contact .submit-button:disabled {
           opacity: 0.7;
           cursor: not-allowed;
           transform: none;
         }
 
-        .spinner {
+        #contact .spinner {
           width: 20px;
           height: 20px;
           border: 2px solid transparent;
@@ -323,18 +325,18 @@
           to { transform: rotate(360deg); }
         }
 
-        .submit-help {
+        #contact .submit-help {
           text-align: center;
           color: var(--color-gray-medium);
           font-size: 0.875rem;
           margin: 0;
         }
 
-        .animate-fade-in {
+        #contact .animate-fade-in {
           animation: fadeIn 0.8s ease-out;
         }
 
-        .animate-slide-up {
+        #contact .animate-slide-up {
           animation: slideUp 0.8s ease-out;
         }
 

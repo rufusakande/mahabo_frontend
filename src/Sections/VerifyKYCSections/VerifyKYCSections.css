@@ -285,12 +285,12 @@
   }
 
   #kycForm .form-group .file-upload #idFile{
-    max-width: 100px;
+    max-width: 250px;
   }
 }
 
 #kycForm .form-group .file-upload{
-  max-width: 100%;
+  max-width: 300px;
 }
 
 #kycForm .form-group input:focus,
@@ -780,7 +780,7 @@
 /* Tablettes et écrans moyens */
 @media (max-width: 768px) {
   #kycForm {
-    padding: 1rem 0.5rem;
+    padding: 100px 5% 1rem;
   }
 
   #kycForm .form-header {
@@ -899,9 +899,6 @@
 
 /* Montres connectées et très petits écrans */
 @media (max-width: 320px) {
-  #kycForm {
-    padding: 80px 5% 50px;
-  }
 
   #kycForm .form-container {
     border-radius: 12px;
