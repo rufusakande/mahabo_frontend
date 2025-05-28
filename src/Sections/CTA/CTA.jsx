@@ -56,7 +56,7 @@ const CTA = () => {
           {stats.map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="stat">
+              <div style={{backgroundColor:'white'}} key={index} className="stat">
                 <div className="stat__icon">
                   <IconComponent size={20} />
                 </div>

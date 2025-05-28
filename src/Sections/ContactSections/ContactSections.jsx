@@ -131,8 +131,8 @@ const ContactSections = () => {
                 <div className="info-details">
                   <h3>Email</h3>
                   <p>
-                    <a href="mailto:support@kyc-verification.com">
-                      support@kyc-verification.com
+                    <a href="mailto:tamkoti@yahoo.fr">
+                      tamkoti@yahoo.fr
                     </a>
                   </p>
                 </div>
@@ -145,8 +145,8 @@ const ContactSections = () => {
                 <div className="info-details">
                   <h3>Téléphone</h3>
                   <p>
-                    <a href="tel:+33123456789">
-                      +33 1 23 45 67 89
+                    <a href="tel:+2290197738224">
+                      +229 01 97 73 82 24
                     </a>
                   </p>
                 </div>
@@ -159,8 +159,7 @@ const ContactSections = () => {
                 <div className="info-details">
                   <h3>Adresse</h3>
                   <address style={{ fontStyle: 'normal' }}>
-                    123 Avenue de la Sécurité<br />
-                    75001 Paris, France
+                    BP 969 Parakou, Bénin
                   </address>
                 </div>
               </div>

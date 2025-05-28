@@ -627,7 +627,7 @@ const KYCModificationSection = () => {
   return (
     <div id='kyc-modification' className="kyc-modification">
       <header className="page-header">
-        <div className="container">
+        <div style={{paddingTop:'100px'}} className="container">
           <button className="back-button" onClick={() => window.history.back()}>
             <ArrowLeft className="icon" />
             Retour

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, CheckCircle, Clock, XCircle, AlertTriangle, RefreshCw } from 'lucide-react';
 import './TrackingSections.css';
 
@@ -8,7 +9,8 @@ const TrackingSections = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
-  const API_URL = import.meta.env.VITE_API_URL
+  const API_URL = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -118,6 +120,7 @@ const TrackingSections = () => {
       } else {
         console.log('Erreur lors de l\'envoi du code de modification.');
       }
+      navigate(`../modification`)
     } catch (error) {
       console.error('Erreur lors de l\'envoi du code:', error);
       console.log('Erreur de connexion lors de l\'envoi du code.');

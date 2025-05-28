@@ -13,10 +13,10 @@ const Footer = () => {
       { href: '#aide', label: 'Centre d\'aide' }
     ],
     legal: [
-      { href: '#confidentialite', label: 'Politique de confidentialité' },
-      { href: '#conditions', label: 'Conditions d\'utilisation' },
-      { href: '#rgpd', label: 'Conformité RGPD' },
-      { href: '#cookies', label: 'Gestion des cookies' }
+      { href: 'privacypolicy', label: 'Politique de confidentialité' },
+      { href: 'termsofuse', label: 'Conditions d\'utilisation' },
+      { href: 'rgpd', label: 'Conformité RGPD' },
+      { href: 'cookies', label: 'Gestion des cookies' }
     ],
     company: [
       { href: '#apropos', label: 'À propos' },
@@ -55,17 +55,17 @@ const Footer = () => {
             <div className="contact-details">
               <div className="contact-item">
                 <MapPin className="contact-icon" aria-hidden="true" />
-                <span className="contact-text">123 Avenue de la République, 75011 Paris</span>
+                <span className="contact-text">BP 969 Parakou, Bénin</span>
               </div>
               
               <div className="contact-item">
                 <Phone className="contact-icon" aria-hidden="true" />
-                <a href="tel:+33123456789" className="contact-link">+33 1 23 45 67 89</a>
+                <a href="tel:+2290197738224" className="contact-link">+229 01 97 73 82 24</a>
               </div>
               
               <div className="contact-item">
                 <Mail className="contact-icon" aria-hidden="true" />
-                <a href="mailto:contact@securekyc.com" className="contact-link">contact@securekyc.com</a>
+                <a href="mailto:tamkoti@yahoo.fr" className="contact-link">tamkoti@yahoo.fr</a>
               </div>
             </div>
 
@@ -172,15 +172,15 @@ const Footer = () => {
           </div>
           
           <div className="bottom-links">
-            <a href="#confidentialite" className="bottom-link">
+            <a href="privacypolicy" className="bottom-link">
               Confidentialité
             </a>
             <span className="link-separator" aria-hidden="true">•</span>
-            <a href="#conditions" className="bottom-link">
+            <a href="termsofuse" className="bottom-link">
               Conditions
             </a>
             <span className="link-separator" aria-hidden="true">•</span>
-            <a href="#cookies" className="bottom-link">
+            <a href="cookies" className="bottom-link">
               Cookies
             </a>
           </div>

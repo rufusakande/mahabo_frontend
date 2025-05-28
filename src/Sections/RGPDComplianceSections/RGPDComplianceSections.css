@@ -1,0 +1,130 @@
+.rgpd-compliance {
+  padding: 120px 5% 50px;
+  background-color: var(--color-white);
+  font-family: 'Inter', sans-serif;
+  color: var(--color-gray-medium);
+  line-height: 1.6;
+}
+
+.rgpd-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: var(--color-white);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px var(--color-shadow);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.rgpd-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(to right, var(--color-primary), var(--color-primary-light));
+}
+
+.rgpd-compliance h1 {
+  color: var(--color-primary);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.rgpd-compliance h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--color-primary-light);
+  border-radius: 3px;
+}
+
+.rgpd-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.rgpd-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.rgpd-section h2 {
+  color: var(--color-primary);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.rgpd-section h2 svg {
+  margin-right: 8px;
+  stroke: var(--color-primary-light);
+}
+
+.rgpd-section p,
+.rgpd-section ul {
+  margin-bottom: 1rem;
+}
+
+.rgpd-section ul {
+  padding-left: 1.5rem;
+}
+
+.rgpd-section li {
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.rgpd-section li::before {
+  content: '•';
+  color: var(--color-primary-light);
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rgpd-container {
+    padding: 120px 5% 50px;
+  }
+
+  .rgpd-compliance h1 {
+    font-size: 1.8rem;
+  }
+
+  .rgpd-section h2 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .rgpd-container {
+    padding: 1.25rem;
+    box-shadow: 0 2px 10px var(--color-shadow);
+  }
+
+  .rgpd-compliance h1 {
+    font-size: 1.5rem;
+  }
+
+  .rgpd-section h2 {
+    font-size: 1.1rem;
+  }
+}

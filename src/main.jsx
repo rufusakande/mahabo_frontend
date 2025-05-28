@@ -14,6 +14,10 @@ import Login from './Pages/admin/Login';
 import Demandes from './Pages/admin/Demandes';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 import KycRequestDetails from './Pages/admin/KycRequestDetails';
+import PrivacyPolicy from './Pages/PrivacyPolicy';
+import TermsOfUse from './Pages/TermsOfUse';
+import RGPD from './Pages/RGPD';
+import Cookie from './Pages/cookie';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -24,6 +28,10 @@ createRoot(document.getElementById('root')).render(
           <Route path="/tracking" element={<Tracking/>} />
           <Route path="/modification" element={<KYCModification/>} />
           <Route path="/contact" element={<Contact/>} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy/>} />
+          <Route path="/termsofuse" element={<TermsOfUse/>} />
+          <Route path="/rgpd" element={<RGPD/>} />
+          <Route path="/cookies" element={<Cookie/>} />
           { /**
            * Routes admin
            */}
